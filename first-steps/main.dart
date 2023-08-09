@@ -55,7 +55,10 @@ class _MainAppState extends State<MainApp> {
                           color: Colors.blue[100],
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Text(mainState.messages[index]['content']),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(mainState.messages[index]['content']),
+                        ),
                       );
                     },
                   ),
