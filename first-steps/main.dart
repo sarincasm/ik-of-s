@@ -51,8 +51,13 @@ class _MainAppState extends State<MainApp> {
                     itemCount: mainState.messages.length,
                     itemBuilder: (context, index) {
                       return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CircleAvatar(),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 4),
+                            child: CircleAvatar(),
+                          ),
+                          const SizedBox(width: 6),
                           Flexible(
                             child: DecoratedBox(
                               decoration: BoxDecoration(
