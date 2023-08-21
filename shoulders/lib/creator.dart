@@ -1,41 +1,107 @@
 import 'package:flutter/material.dart';
 
+class Creator {
+  final String creatorName;
+  final String creatorImageUrl;
+  final String followerCount;
+
+  const Creator({
+    required this.creatorName,
+    required this.creatorImageUrl,
+    required this.followerCount,
+  });
+}
+
 class CreatorProfile extends StatelessWidget {
   const CreatorProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var creator = const Creator(
+      creatorImageUrl:
+          'https://filebucket.onefootball.com/2023/5/1684696621150-blob',
+      creatorName: 'Her Football Hub',
+      followerCount: '137K Followers',
+    );
+
     var backgroundColor =
         (const HSLColor.fromAHSL(1.0, 206.5, .607, .89)).toColor();
     return Container(
       color: backgroundColor,
       width: double.infinity,
-      child: const Column(children: [
-        SizedBox(height: 120),
+      child: Column(children: [
+        const SizedBox(height: 120),
         CircleAvatar(
           radius: 75,
           backgroundImage: NetworkImage(
-            'https://filebucket.onefootball.com/2023/5/1684696621150-blob',
+            creator.creatorImageUrl,
           ),
         ),
-        SizedBox(height: 30),
+        const SizedBox(height: 30),
         Text(
-          'Her Football Hub',
-          style: TextStyle(
+          creator.creatorName,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
-          '137K Followers',
-          style: TextStyle(
+          creator.followerCount,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
-        )
+        ),
+        const SizedBox(height: 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(
+                  color: Colors.white,
+                  width: 1,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Follow'.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(
+                  color: Colors.white,
+                  width: 1,
+                ),
+                shape: const CircleBorder(),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(4.0),
+                child: Icon(
+                  Icons.notification_add_outlined,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ),
+            )
+          ],
+        ),
       ]),
     );
   }
