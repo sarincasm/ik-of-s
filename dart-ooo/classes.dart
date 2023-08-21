@@ -1,17 +1,13 @@
 class Phone {
-  String phone = '';
-  String areaCode = '';
-  String internationalCode = '';
+  final String phone;
+  final String areaCode;
+  final String internationalCode;
 
-  Phone({
-    required String phone,
-    required String areaCode,
-    required String internationalCode,
-  }) {
-    this.phone = phone;
-    this.areaCode = areaCode;
-    this.internationalCode = internationalCode;
-  }
+  const Phone({
+    required this.phone,
+    required this.areaCode,
+    required this.internationalCode,
+  });
 
   printAll() {
     print(phone);
