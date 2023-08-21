@@ -1,17 +1,17 @@
 void main() {
-  callMeMaybe(
-    String phone,
-    String areaCode,
-    String internationalCode,
-  ) {
+  callMeMaybe({
+    required String phone,
+    required String areaCode,
+    required String internationalCode,
+  }) {
     print(phone);
     print(areaCode);
     print(internationalCode);
   }
 
   callMeMaybe(
-    '123',
-    '12',
-    '11',
+    phone: '123',
+    areaCode: '12',
+    internationalCode: '11',
   );
 }
