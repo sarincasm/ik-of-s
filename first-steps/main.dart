@@ -50,15 +50,23 @@ class _MainAppState extends State<MainApp> {
                     shrinkWrap: true,
                     itemCount: mainState.messages.length,
                     itemBuilder: (context, index) {
-                      return DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.blue[100],
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Text(mainState.messages[index]['content']),
-                        ),
+                      return Row(
+                        children: [
+                          const CircleAvatar(),
+                          Flexible(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.blue[100],
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child:
+                                    Text(mainState.messages[index]['content']),
+                              ),
+                            ),
+                          ),
+                        ],
                       );
                     },
                   ),
