@@ -50,7 +50,13 @@ class _MainAppState extends State<MainApp> {
                     shrinkWrap: true,
                     itemCount: mainState.messages.length,
                     itemBuilder: (context, index) {
-                      return Text(mainState.messages[index]['content']);
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: Colors.blue[100],
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Text(mainState.messages[index]['content']),
+                      );
                     },
                   ),
                 ),
