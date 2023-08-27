@@ -50,28 +50,50 @@ class _MainAppState extends State<MainApp> {
                     shrinkWrap: true,
                     itemCount: mainState.messages.length,
                     itemBuilder: (context, index) {
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 4),
-                            child: CircleAvatar(),
-                          ),
-                          const SizedBox(width: 6),
-                          Flexible(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.blue[100],
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8),
-                                child:
-                                    Text(mainState.messages[index]['content']),
+                      var leftPadding = 0.0;
+                      var rightPadding = .25 * fullWidth;
+                      var textDirection = TextDirection.ltr;
+                      var decorationColor = Colors.blue[100];
+
+                      final messageObject = mainState.messages[index];
+                      if (messageObject['role'] == 'user') {
+                        leftPadding = .25 * fullWidth;
+                        rightPadding = 0;
+                        textDirection = TextDirection.rtl;
+                        decorationColor = Colors.green[100];
+                      }
+
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          leftPadding,
+                          4,
+                          rightPadding,
+                          4,
+                        ),
+                        child: Row(
+                          textDirection: textDirection,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.only(top: 4),
+                              child: CircleAvatar(),
+                            ),
+                            const SizedBox(width: 6),
+                            Flexible(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: decorationColor,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text(
+                                      mainState.messages[index]['content']),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     },
                   ),
