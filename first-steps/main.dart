@@ -50,51 +50,7 @@ class _MainAppState extends State<MainApp> {
                     shrinkWrap: true,
                     itemCount: mainState.messages.length,
                     itemBuilder: (context, index) {
-                      var leftPadding = 0.0;
-                      var rightPadding = .25 * fullWidth;
-                      var textDirection = TextDirection.ltr;
-                      var decorationColor = Colors.blue[100];
-
-                      final messageObject = mainState.messages[index];
-                      if (messageObject['role'] == 'user') {
-                        leftPadding = .25 * fullWidth;
-                        rightPadding = 0;
-                        textDirection = TextDirection.rtl;
-                        decorationColor = Colors.green[100];
-                      }
-
-                      return Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          leftPadding,
-                          4,
-                          rightPadding,
-                          4,
-                        ),
-                        child: Row(
-                          textDirection: textDirection,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(top: 4),
-                              child: CircleAvatar(),
-                            ),
-                            const SizedBox(width: 6),
-                            Flexible(
-                              child: DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: decorationColor,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Text(
-                                      mainState.messages[index]['content']),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return Text(mainState.messages[index]['content']);
                     },
                   ),
                 ),
@@ -141,7 +97,6 @@ const systemPrompt =
     'You will try to teach me german (deutsch). For any word or phrase I ask you about, provide a translation, mulitple possible meanings, etymology and a few example uses in sentence. Describe the individual stem words that the word is made of, with the translation, etymology and example uses of the individual words as well.';
 
 class MainState {
-  String message = 'Click';
   final messages = [];
   final systemMessage = {
     'content': systemPrompt,
@@ -168,15 +123,9 @@ class MainState {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $openAIkey'
       },
-      body: jsonEncode({
-        'model': 'gpt-3.5-turbo',
-        'messages': [
-          {'role': 'user', 'content': prompt}
-        ]
-      }),
+      body: jsonEncode({'model': 'gpt-3.5-turbo', 'messages': messages}),
     );
     var json = jsonDecode(utf8.decode(response.bodyBytes));
-    message = json['choices'][0]['message']['content'];
     messages.add(json['choices'][0]['message']);
     callback(() {});
   }
