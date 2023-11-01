@@ -15,17 +15,12 @@ class Creator {
 }
 
 class CreatorProfile extends StatelessWidget {
-  const CreatorProfile({super.key});
+  const CreatorProfile({super.key, required this.creator});
+
+  final Creator creator;
 
   @override
   Widget build(BuildContext context) {
-    var creator = const Creator(
-      creatorImageUrl:
-          'https://filebucket.onefootball.com/2023/5/1684696621150-blob',
-      creatorName: 'Her Football Hub',
-      followerCount: '137K Followers',
-    );
-
     var backgroundColor =
         (const HSLColor.fromAHSL(1.0, 206.5, .607, .89)).toColor();
     return Container(
