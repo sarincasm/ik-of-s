@@ -5,22 +5,36 @@ void main() {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
 
   @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  var isBeingFollowed = false;
+  onPressedFollow() {
+    setState(() {
+      isBeingFollowed = !isBeingFollowed;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    const creator = Creator(
+    var creator = Creator(
       creatorImageUrl:
           'https://filebucket.onefootball.com/2023/5/1684696621150-blob',
       creatorName: 'Her Football Hub',
       followerCount: '137K Followers',
+      isBeingFollowed: isBeingFollowed,
     );
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: CreatorProfile(
           creator: creator,
+          onPressedFollow: onPressedFollow,
         ),
       ),
     );

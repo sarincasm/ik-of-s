@@ -6,23 +6,35 @@ class Creator {
   final String creatorName;
   final String creatorImageUrl;
   final String followerCount;
+  final bool isBeingFollowed;
 
   const Creator({
     required this.creatorName,
     required this.creatorImageUrl,
     required this.followerCount,
+    required this.isBeingFollowed,
   });
 }
 
 class CreatorProfile extends StatelessWidget {
-  const CreatorProfile({super.key, required this.creator});
+  const CreatorProfile({
+    super.key,
+    required this.creator,
+    required this.onPressedFollow,
+  });
 
   final Creator creator;
+  final Function onPressedFollow;
 
   @override
   Widget build(BuildContext context) {
     var backgroundColor =
         (const HSLColor.fromAHSL(1.0, 206.5, .607, .89)).toColor();
+    var buttonBackgroundColor =
+        creator.isBeingFollowed ? Colors.white : Colors.transparent;
+    var textColor = creator.isBeingFollowed ? Colors.black87 : Colors.white;
+    var buttonText = creator.isBeingFollowed ? 'Following' : 'Follow';
+
     return Container(
       color: backgroundColor,
       width: double.infinity,
@@ -79,8 +91,11 @@ class CreatorProfile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            onPressedFollow();
+                          },
                           style: OutlinedButton.styleFrom(
+                            backgroundColor: buttonBackgroundColor,
                             side: const BorderSide(
                               color: Colors.white,
                               width: 1,
@@ -92,11 +107,11 @@ class CreatorProfile extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'Follow'.toUpperCase(),
-                              style: const TextStyle(
+                              buttonText.toUpperCase(),
+                              style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: textColor,
                               ),
                             ),
                           ),
