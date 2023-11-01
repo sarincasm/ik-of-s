@@ -24,16 +24,12 @@ class CreatorProfile extends StatelessWidget {
   });
 
   final Creator creator;
-  final Function onPressedFollow;
+  final void Function() onPressedFollow;
 
   @override
   Widget build(BuildContext context) {
     var backgroundColor =
         (const HSLColor.fromAHSL(1.0, 206.5, .607, .89)).toColor();
-    var buttonBackgroundColor =
-        creator.isBeingFollowed ? Colors.white : Colors.transparent;
-    var textColor = creator.isBeingFollowed ? Colors.black87 : Colors.white;
-    var buttonText = creator.isBeingFollowed ? 'Following' : 'Follow';
 
     return Container(
       color: backgroundColor,
@@ -90,31 +86,9 @@ class CreatorProfile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        OutlinedButton(
-                          onPressed: () {
-                            onPressedFollow();
-                          },
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: buttonBackgroundColor,
-                            side: const BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              buttonText.toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: textColor,
-                              ),
-                            ),
-                          ),
+                        FollowButton(
+                          onPressed: onPressedFollow,
+                          isActive: creator.isBeingFollowed,
                         ),
                         OutlinedButton(
                           onPressed: () {},
@@ -154,6 +128,52 @@ class CreatorProfile extends StatelessWidget {
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class FollowButton extends StatelessWidget {
+  FollowButton({
+    super.key,
+    required this.isActive,
+    required this.onPressed,
+  }) {
+    buttonBackgroundColor = isActive ? Colors.white : Colors.transparent;
+    buttonText = isActive ? 'Following' : 'Follow';
+    textColor = isActive ? Colors.black87 : Colors.white;
+  }
+
+  final bool isActive;
+  final void Function() onPressed;
+  late final Color buttonBackgroundColor;
+  late final String buttonText;
+  late final Color textColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      onPressed: onPressed,
+      style: OutlinedButton.styleFrom(
+        backgroundColor: buttonBackgroundColor,
+        side: const BorderSide(
+          color: Colors.white,
+          width: 1,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          buttonText.toUpperCase(),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: textColor,
+          ),
+        ),
       ),
     );
   }
