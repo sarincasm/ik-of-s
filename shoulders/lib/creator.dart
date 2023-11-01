@@ -7,12 +7,14 @@ class Creator {
   final String creatorImageUrl;
   final String followerCount;
   final bool isBeingFollowed;
+  final bool isBeingNotified;
 
   const Creator({
     required this.creatorName,
     required this.creatorImageUrl,
     required this.followerCount,
     required this.isBeingFollowed,
+    required this.isBeingNotified,
   });
 }
 
@@ -21,10 +23,12 @@ class CreatorProfile extends StatelessWidget {
     super.key,
     required this.creator,
     required this.onPressedFollow,
+    required this.onPressedGetNotified,
   });
 
   final Creator creator;
   final void Function() onPressedFollow;
+  final void Function() onPressedGetNotified;
 
   @override
   Widget build(BuildContext context) {
@@ -90,23 +94,10 @@ class CreatorProfile extends StatelessWidget {
                           onPressed: onPressedFollow,
                           isActive: creator.isBeingFollowed,
                         ),
-                        OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            ),
-                            shape: const CircleBorder(),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Icon(
-                              Icons.notification_add_outlined,
-                              color: Colors.white,
-                              size: 30,
-                            ),
-                          ),
+                        NotificationButton(
+                          isVisible: creator.isBeingFollowed,
+                          isActive: creator.isBeingNotified,
+                          onPressed: onPressedGetNotified,
                         ),
                       ],
                     ),
@@ -128,6 +119,57 @@ class CreatorProfile extends StatelessWidget {
             ],
           )
         ],
+      ),
+    );
+  }
+}
+
+class NotificationButton extends StatelessWidget {
+  NotificationButton({
+    super.key,
+    required this.isVisible,
+    required this.isActive,
+    required this.onPressed,
+  }) {
+    buttonBackgroundColor = isActive ? Colors.white : Colors.transparent;
+    textColor = isActive ? Colors.black87 : Colors.white;
+    icon =
+        isActive ? Icons.notifications_active : Icons.notification_add_outlined;
+  }
+
+  final bool isVisible;
+  final bool isActive;
+  final Function onPressed;
+  late final Color buttonBackgroundColor;
+  late final Color textColor;
+  late final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!isVisible) {
+      return Container();
+    }
+
+    return OutlinedButton(
+      onPressed: () {
+        onPressed();
+      },
+      style: OutlinedButton.styleFrom(
+        backgroundColor: buttonBackgroundColor,
+        shape: const CircleBorder(),
+        side: const BorderSide(
+          color: Colors.white,
+          width: 0.5,
+          style: BorderStyle.solid,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Icon(
+          icon,
+          color: textColor,
+          size: 30,
+        ),
       ),
     );
   }

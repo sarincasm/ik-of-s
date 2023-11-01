@@ -14,9 +14,19 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> {
   var isBeingFollowed = false;
+  var isBeingNotified = false;
   onPressedFollow() {
     setState(() {
       isBeingFollowed = !isBeingFollowed;
+      if (!isBeingFollowed) {
+        isBeingNotified = false;
+      }
+    });
+  }
+
+  onPressedGetNotified() {
+    setState(() {
+      isBeingNotified = !isBeingNotified;
     });
   }
 
@@ -28,6 +38,7 @@ class _MainAppState extends State<MainApp> {
       creatorName: 'Her Football Hub',
       followerCount: '137K Followers',
       isBeingFollowed: isBeingFollowed,
+      isBeingNotified: isBeingNotified,
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -35,6 +46,7 @@ class _MainAppState extends State<MainApp> {
         body: CreatorProfile(
           creator: creator,
           onPressedFollow: onPressedFollow,
+          onPressedGetNotified: onPressedGetNotified,
         ),
       ),
     );
